@@ -25,7 +25,7 @@ CREATE TABLE company (
 ```
 CREATE TABLE audit (
     emp_id INTEGER PRIMARY KEY NOT NULL,
-    entry_date TEXT NOT NULL,
+    entry_date TEXT NOT NULL
 );
 ```
 
