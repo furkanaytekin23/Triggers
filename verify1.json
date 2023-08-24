@@ -1,0 +1,7 @@
+{
+    "command": [
+        "sh",
+        "-c",
+        "[ -e /home/bb/mydatabase.db ] > /dev/null 2>&1 || exit 1"
+    ]
+}
