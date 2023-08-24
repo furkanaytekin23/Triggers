@@ -1,57 +1,59 @@
-Bu senaryoda sizlerden, size tahsis edilen makinelerde aşağıdaki talimatlar gereğince Linux komut satırında kullanıcının SQL sorgularını deneyebileceği şekilde gerekli komutların sağlandığı, "select join left" ve "select join right" işlemlerinin yapılması beklenmektedir.
+Bu senaryoda sizlerden, size tahsis edilen makinelerde aşağıdaki talimatlar gereğince Linux komut satırında kullanıcının SQL sorgularını deneyebileceği şekilde gerekli komutların sağlandığı, "Trigger" işleminin yapılması beklenmektedir.
 
-Senaryo boyunca uygulama adımlarında belirtildiği şekilde SQL veritabanı tabloları oluşturulacak ve "select join left" ve "select join right" komutları yardımıyla sonuçların talimatlara uygun şekilde çıktılarının gözlemlenmesi istenmektedir.
+Trigger: Tetikleyiciler herhangi bir database olayın olması durumunda tetiklenmesi sağlanabilir update,insert,delete vs gibi olaylar meydana geldiginde tetiklenip bir iş yaptırılabilir.örnegin : databaseden bir bilgi silinidiginde log alıp saat kacta kim tarafından yapıldıgının bilgisini almak gibi .
+Senaryo boyunca uygulama adımlarında belirtildiği şekilde SQL veritabanı tabloları oluşturulacak ve "Trigger" yardımıyla bir insert işlemi olursa kim tarafından ve tarihinin gözlemlenmesi istenmektedir.
 
 ### 🚀 Uygulama Adımları 🚀
 
 1. Alpine Linux sisteminizde SQLite veritabanının kurulu olduğundan emin olunuz. Eğer kurulu değilse, Alpine Linux paket yöneticisi olan `apk` ile SQLite kurabilirsiniz. `apk add sqlite`
-2. `/home/bb/` dizini altında `mydatabase.db` adında veritabanı dosyası oluşturunuz.
-3. `sqlite3 mydatabase.db`komutunu girerek veritabanına bağlananın.
+2. `/home/bb/` dizini altında `turktelekomtrigger.db` adında veritabanı dosyası oluşturunuz.
+3. `sqlite3 turktelekomtrigger.db`komutunu girerek veritabanına bağlananın.
 4. `.mode column` komutunu kullanarak sorgu sonuçlarını sütun düzeninde görüntülemeyi ayarlayın.
 5. `.headers on` komutunu kullanarak sorgu sonuçlarında sütun başlıklarını görüntülemeyi ayarlayın.
 6. Aşağıdaki SQL komutlarını kullanarak örnek tablo oluşturunuz.
 
 ```
-CREATE TABLE customers (
+CREATE TABLE company (
     id INTEGER PRIMARY KEY,
     name TEXT,
-    email TEXT
-);
-
-CREATE TABLE orders (
-    id INTEGER PRIMARY KEY,
-    customer_id INTEGER,
-    product TEXT,
-    amount REAL
+    age INTEGER
 );
 ```
 
-7. Aşağıdaki SQL komutlarıyla da örnek verileri tablolara ekleyiniz.
+7. Aşağıdaki SQL komutlarıyla da Log almak için bir tablo ekleyiniz.
 
 ```
-INSERT INTO customers (name, email) VALUES ('Alice', 'alice@example.com');
-INSERT INTO customers (name, email) VALUES ('Bob', 'bob@example.com');
-
-INSERT INTO orders (customer_id, product, amount) VALUES (1, 'Product A', 100.0);
-INSERT INTO orders (customer_id, product, amount) VALUES (1, 'Product B', 150.0);
-INSERT INTO orders (customer_id, product, amount) VALUES (2, 'Product A', 200.0);
-
+CREATE TABLE audit (
+    emp_id INTEGER PRIMARY KEY NOT NULL,
+    entry_date TEXT NOT NULL,
+);
 ```
 
-8. Müşteri adlarıyla beraber, müşteriye ait siparişleri sol birleştirme ile görüntülemek için aşağıdaki SQL sorgusunu giriniz.
+8. Aşağıdaki SQL komutlarıyla da bir tetikleyici oluşturunuz, company tablosuna insert işlemi olursa audit tablosuna id ve o anın tarihlerini yazdırınız.
 
 ```
-SELECT customers.name, orders.product, orders.amount
-FROM customers
-LEFT JOIN orders ON customers.id = orders.customer_id;
+CREATE TRIGGER audit_log AFTER INSERT ON company
+BEGIN
+INSERT INTO audit(emp_id,entry_date) VALUES (new.id,datetime('now'));
+END;
 ```
 
-9. Ürün isimleriyle beraber, siparişi veren müşterileri sağ birleştirme ile görüntülemek için aşağıdaki SQL sorgusunu giriniz.
+9. Aşağıdaki SQL komutlarıyla da company tablosuna örnek bir veri ekleyiniz.
 
 ```
-SELECT customers.name, orders.product, orders.amount
-FROM orders
-RIGHT JOIN customers ON orders.customer_id = customers.id;
+INSERT INTO company(id,name,age) VALUES(23,'Furkan Aytekin',27);
 ```
 
-10. `.quit` komutunu kullanarak SQLite terminalinden çıkabilirsiniz.
+10. Aşağıdaki SQL komutlarıyla da audit tablosunu görüntüleyiniz.
+
+```
+SELECT * FROM audit;
+```
+
+11. Aşağıdaki SQL komutlarıyla da oluşturulan triggerları listeleyiniz.
+
+```
+select name from sqlite_master where type = "trigger";
+```
+
+12. `.quit` komutunu kullanarak SQLite terminalinden çıkabilirsiniz.
