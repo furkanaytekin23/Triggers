@@ -28,26 +28,14 @@ CREATE TABLE audit (
 );
 ```
 
-8. Aşağıdaki SQL komutlarıyla da bir tetikleyici oluşturunuz, company tablosuna insert işlemi olursa audit tablosuna id ve o anın tarihlerini yazdırınız.
+8. SQL komutlarıyla bir tetikleyici oluşturunuz, company tablosuna insert işlemi olursa audit tablosuna id ve o anın tarihlerini yazdırınız.
 
-```
-CREATE TRIGGER audit_log AFTER INSERT ON company
-BEGIN
-INSERT INTO audit(emp_id,entry_date) VALUES (new.id,datetime('now'));
-END;
-```
 
-9. Aşağıdaki SQL komutlarıyla da company tablosuna örnek bir veri ekleyiniz.
+9. SQL komutlarıyla company tablosuna örnek bir veri ekleyiniz.
 
-```
-INSERT INTO company(id,name,age) VALUES(23,'Furkan Aytekin',27);
-```
 
-10. Aşağıdaki SQL komutlarıyla da audit tablosunu görüntüleyiniz.
+10. SQL komutlarıyla  audit tablosunu görüntüleyiniz.
 
-```
-SELECT * FROM audit;
-```
 
 11. Aşağıdaki SQL komutlarıyla da oluşturulan triggerları listeleyiniz.
 
