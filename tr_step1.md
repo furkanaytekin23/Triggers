@@ -1,7 +1,6 @@
-Bu senaryoda sizlerden, size tahsis edilen makinelerde aşağıdaki talimatlar gereğince Linux komut satırında kullanıcının SQL sorgularını deneyebileceği şekilde gerekli komutların sağlandığı, "Trigger" işleminin yapılması beklenmektedir.
+Bu senaryoda sizlerden, size tahsis edilen makinelerde aşağıdaki talimatlar gereğince Linux komut satırında kullanıcının SQL veritabanı tabloları oluşturulacak ve "Trigger" yardımıyla bir insert işlemi olursa kim tarafından ve tarihinin gözlemlenmesi istenmektedir.
 
 Trigger: Tetikleyiciler herhangi bir database olayın olması durumunda tetiklenmesi sağlanabilir update,insert,delete vs gibi olaylar meydana geldiginde tetiklenip bir iş yaptırılabilir.örnegin : databaseden bir bilgi silinidiginde log alıp saat kacta kim tarafından yapıldıgının bilgisini almak gibi .
-Senaryo boyunca uygulama adımlarında belirtildiği şekilde SQL veritabanı tabloları oluşturulacak ve "Trigger" yardımıyla bir insert işlemi olursa kim tarafından ve tarihinin gözlemlenmesi istenmektedir.
 
 ### 🚀 Uygulama Adımları 🚀
 
