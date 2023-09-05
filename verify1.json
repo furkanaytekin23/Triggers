@@ -2,6 +2,6 @@
     "command": [
         "sh",
         "-c",
-        "[ cat /home/bb/trigger.txt ] > /dev/null 2>&1 || exit 1"
+        "cat /home/bb/trigger.txt > /dev/null 2>&1 || exit 1"
     ]
 }
