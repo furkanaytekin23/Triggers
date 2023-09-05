@@ -42,5 +42,6 @@ CREATE TABLE audit (
 ```
 select name from sqlite_master where type = "trigger";
 ```
+12. Yazmış olduğunuz trigger syntaxını kopyalayıp `/home/bb/` dizini altında vim editörüyle `trigger.txt` adında dosyaya yapıştırıp kaydediniz.
 
-12. `.quit` komutunu kullanarak SQLite terminalinden çıkabilirsiniz.
+13. `.quit` komutunu kullanarak SQLite terminalinden çıkabilirsiniz.
